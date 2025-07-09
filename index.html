@@ -1,0 +1,17 @@
+function matchJobs() {
+  const input = document.getElementById("skillsInput").value;
+  const userSkills = input.split(/[،,]/).map(s => s.trim());
+  const matched = [];
+
+  jobSuggestions.forEach(entry => {
+    const matchedCount = entry.skills.filter(skill => userSkills.includes(skill)).length;
+    if (matchedCount >= 2) matched.push(...entry.jobs);
+  });
+
+  const resultBox = document.getElementById("results");
+  if (matched.length > 0) {
+    resultBox.innerHTML = `<strong>الوظائف المقترحة:</strong><ul>${matched.map(job => `<li>${job}</li>`).join('')}</ul>`;
+  } else {
+    resultBox.innerHTML = "لم يتم العثور على وظائف مطابقة بشكل كافٍ. حاول إدخال مهارات مختلفة أو أكثر دقة.";
+  }
+}
