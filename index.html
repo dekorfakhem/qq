@@ -1,17 +1,67 @@
-function matchJobs() {
-  const input = document.getElementById("skillsInput").value;
-  const userSkills = input.split(/[،,]/).map(s => s.trim());
-  const matched = [];
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ترشيح الوظائف حسب المهارات</title>
+  <style>
+    body { font-family: Arial; background: #f4f4f4; padding: 20px; direction: rtl; }
+    .container { background: white; padding: 20px; border-radius: 10px; max-width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { color: #333; }
+    input, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; }
+    button { background-color: #007BFF; color: white; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+    .results { margin-top: 20px; background: #e7f1ff; padding: 15px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔍 أدخل مهاراتك وسنقترح لك وظائف مناسبة</h2>
+    <input type="text" id="skillsInput" placeholder="مثال: التفكير النقدي، تحليل البيانات، التواصل" />
+    <button onclick="matchJobs()">اعرض الوظائف المناسبة</button>
+    <div class="results" id="results"></div>
+  </div>
 
-  jobSuggestions.forEach(entry => {
-    const matchedCount = entry.skills.filter(skill => userSkills.includes(skill)).length;
-    if (matchedCount >= 2) matched.push(...entry.jobs);
-  });
+  <script>
+    const jobSuggestions = [
+      {
+        skills: ["تحليل البيانات", "تفكير نقدي", "برمجة"],
+        jobs: ["محلل بيانات", "مطور برمجيات", "باحث"]
+      },
+      {
+        skills: ["تواصل", "قيادة", "تخطيط"],
+        jobs: ["مدير مشاريع", "مسؤول علاقات عامة", "قائد فريق"]
+      },
+      {
+        skills: ["تصميم", "كتابة", "إبداع"],
+        jobs: ["مصمم جرافيك", "كاتب محتوى", "مسوق رقمي"]
+      },
+      {
+        skills: ["تدريب", "تحليل", "تواصل"],
+        jobs: ["مدرب تنمية بشرية", "مستشار مهني", "مدرس"]
+      },
+      {
+        skills: ["تفاوض", "مرونة", "تحليل"],
+        jobs: ["مندوب مبيعات", "مستشار أعمال", "مدير تطوير"]
+      }
+    ];
 
-  const resultBox = document.getElementById("results");
-  if (matched.length > 0) {
-    resultBox.innerHTML = `<strong>الوظائف المقترحة:</strong><ul>${matched.map(job => `<li>${job}</li>`).join('')}</ul>`;
-  } else {
-    resultBox.innerHTML = "لم يتم العثور على وظائف مطابقة بشكل كافٍ. حاول إدخال مهارات مختلفة أو أكثر دقة.";
-  }
-}
+    function matchJobs() {
+      const input = document.getElementById("skillsInput").value;
+      const userSkills = input.split(/[،,]/).map(s => s.trim());
+      const matched = [];
+
+      jobSuggestions.forEach(entry => {
+        const matchedCount = entry.skills.filter(skill => userSkills.includes(skill)).length;
+        if (matchedCount >= 2) matched.push(...entry.jobs);
+      });
+
+      const resultBox = document.getElementById("results");
+      if (matched.length > 0) {
+        resultBox.innerHTML = `<strong>الوظائف المقترحة:</strong><ul>${matched.map(job => `<li>${job}</li>`).join('')}</ul>`;
+      } else {
+        resultBox.innerHTML = "لم يتم العثور على وظائف مطابقة بشكل كافٍ. حاول إدخال مهارات مختلفة أو أكثر دقة.";
+      }
+    }
+  </script>
+</body>
+</html>
